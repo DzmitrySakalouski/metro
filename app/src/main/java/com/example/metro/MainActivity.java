@@ -104,10 +104,6 @@ public class MainActivity extends AppCompatActivity implements SoundPool.OnLoadC
         timer = null;
     }
 
-    public void pause() {
-
-    }
-
     private void play() {
         soundPool.play(soundIdShot, 1, 1,0,0,0);
     }
