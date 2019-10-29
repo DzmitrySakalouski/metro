@@ -10,8 +10,12 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -25,20 +29,23 @@ public class MainActivity extends AppCompatActivity implements SoundPool.OnLoadC
     final String LOG_TAG = "myLogs";
     Timer timer;
     TimerTask task;
-    EditText bpmInput;
     int count = 1;
-    int bpm;
+    int bpm = 80;
     TextView textViewBpm;
     boolean isPlaying = false;
+    RadioButton noIncrease;
+    RadioGroup radioGroup;
+    RadioGroup rgAddTempo;
+    int increaseValueBar = 4;
+    int increaseValue = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        bpmInput = findViewById(R.id.bpm);
-        bpmInput.setFocusableInTouchMode(true);
         textViewBpm = findViewById(R.id.viewBpm);
+        textViewBpm.setText("Bpm = " + bpm);
 
         AudioAttributes audioAttributes = new AudioAttributes.Builder()
                 .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
@@ -53,21 +60,113 @@ public class MainActivity extends AppCompatActivity implements SoundPool.OnLoadC
 
         handler = new Handler() {
             public void handleMessage(Message msg) {
-                textView.setText("Count = " + msg.what);
-                isPlaying = true;
+                String b = String.valueOf(count);
+
+                textView.setText(b);
+                if(count++ % increaseValueBar == 0) {
+                    stopClick();
+                    bpm += increaseValue;
+                    count = 1;
+                    startClick();
+                }
             }
         };
         Log.d(LOG_TAG, "soundIdShot = " + soundIdShot);
+        noIncrease = findViewById(R.id.none);
+        noIncrease.setChecked(true);
+
+        radioGroup = findViewById(R.id.radioGroup);
+        rgAddTempo = findViewById(R.id.rgAddTempo);
+
+        rgAddTempo.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int checkId) {
+                switch (checkId) {
+                    case -1:
+                        Toast.makeText(getApplicationContext(), "Ничего не выбрано",
+                                Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.radPlus1:
+                        increaseValue = 1;
+                        Toast.makeText(getApplicationContext(), "Первый переключатель",
+                                Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.radPlus2:
+                        increaseValue = 2;
+                        Toast.makeText(getApplicationContext(), "Второй переключатель",
+                                Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.radPlus3:
+                        increaseValue = 3;
+                        Toast.makeText(getApplicationContext(), "Третий переключатель",
+                                Toast.LENGTH_SHORT).show();
+                        break;
+
+                    case R.id.radPlus4:
+                        increaseValue = 4;
+                        Toast.makeText(getApplicationContext(), "Третий переключатель",
+                                Toast.LENGTH_SHORT).show();
+                        break;
+
+                    case R.id.radPlus5:
+                        increaseValue = 5;
+                        Toast.makeText(getApplicationContext(), "Третий переключатель",
+                                Toast.LENGTH_SHORT).show();
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+        });
+
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup radioGroup, int checkedId) {
+                switch (checkedId) {
+                    case -1:
+                        Toast.makeText(getApplicationContext(), "Ничего не выбрано",
+                                Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.bar1:
+                        increaseValueBar = 4;
+                        Toast.makeText(getApplicationContext(), "Первый переключатель",
+                                Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.bar2:
+                        increaseValueBar = 8;
+                        Toast.makeText(getApplicationContext(), "Второй переключатель",
+                                Toast.LENGTH_SHORT).show();
+                        break;
+                    case R.id.bar3:
+                        increaseValueBar = 12;
+                        Toast.makeText(getApplicationContext(), "Третий переключатель",
+                                Toast.LENGTH_SHORT).show();
+                        break;
+
+                    case R.id.bar4:
+                        increaseValueBar = 16;
+                        Toast.makeText(getApplicationContext(), "Третий переключатель",
+                                Toast.LENGTH_SHORT).show();
+                        break;
+
+                    case R.id.none:
+                        Toast.makeText(getApplicationContext(), "Третий переключатель",
+                                Toast.LENGTH_SHORT).show();
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+        });
     }
 
     public void onStartClick(View view) {
-        String bpmValue = bpmInput.getText().toString();
-        bpm = Integer.parseInt(bpmValue);
-
-        startClick(bpm);
+        startClick();
     }
 
-    private void startClick(int bpmVal) {
+    private void startClick() {
         if (timer != null) {
             stopClick();
         }
@@ -75,21 +174,16 @@ public class MainActivity extends AppCompatActivity implements SoundPool.OnLoadC
         task = new TimerTask() {
             @Override
             public void run() {
-
                 play();
                 handler.sendEmptyMessage(count);
-                if(count++ % 4 == 0) {
-                    stopClick();
-                    // bpm+=5;
-                    count = 1;
-                    startClick(bpm);
-                }
+
             }
         };
 
         if (bpm >= 400) return;
 
         textViewBpm.setText("Bpm = " + bpm);
+
         timer.schedule(task, 60000/bpm, 60000/bpm);
     }
 
@@ -108,20 +202,32 @@ public class MainActivity extends AppCompatActivity implements SoundPool.OnLoadC
         soundPool.play(soundIdShot, 1, 1,0,0,0);
     }
 
-    private void count(int c) {
-        System.out.println(c);
+    public void onReset(View v) {
+        if (timer != null) {
+            stopClick();
+        }
+        bpm = 80;
+        count = 0;
+        String countStr = String.valueOf(count);
+        textViewBpm.setText("Bpm = " + bpm);
+        textView.setText(countStr);
+
+        noIncrease.setChecked(true);
+        rgAddTempo.clearCheck();
     }
 
     public void onIncreaseBpm(View view) {
         bpm+=1;
+        textViewBpm.setText("Bpm = " + bpm);
 
-        if (isPlaying) startClick(bpm);
+        if (isPlaying) startClick();
     }
 
     public void onDeccreaseBpm(View view) {
         bpm-=1;
+        textViewBpm.setText("Bpm = " + bpm);
 
-        if (isPlaying) startClick(bpm);
+        if (isPlaying) startClick();
     }
 
     @Override

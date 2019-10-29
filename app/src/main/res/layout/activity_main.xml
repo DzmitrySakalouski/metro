@@ -7,16 +7,6 @@
     tools:context=".MainActivity">
 
     <Button
-        android:id="@+id/plus5"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="+5"
-        app:layout_constraintStart_toEndOf="@+id/plus4"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
         android:id="@+id/start_btn"
         android:layout_width="179dp"
         android:layout_height="50dp"
@@ -44,129 +34,157 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <EditText
-        android:id="@+id/bpm"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="80dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="80"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
     <TextView
         android:id="@+id/viewBpm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="20dp"
         android:text="Bpm"
-        app:layout_constraintBottom_toTopOf="@+id/button4"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/bpm" />
+        app:layout_constraintBaseline_toBaselineOf="@+id/button4"
+        app:layout_constraintEnd_toStartOf="@+id/button4"
+        app:layout_constraintStart_toEndOf="@+id/button3" />
 
     <Button
         android:id="@+id/button3"
         android:layout_width="74dp"
         android:layout_height="40dp"
         android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
         android:onClick="onDeccreaseBpm"
         android:text="-"
-        app:layout_constraintBaseline_toBaselineOf="@+id/bpm"
-        app:layout_constraintEnd_toStartOf="@+id/bpm"
+        app:layout_constraintBottom_toTopOf="@+id/button2"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/button4"
         android:layout_width="74dp"
         android:layout_height="40dp"
-        android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
+        android:layout_marginBottom="16dp"
         android:onClick="onIncreaseBpm"
         android:text="+"
-        app:layout_constraintBaseline_toBaselineOf="@+id/bpm"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/bpm" />
+        app:layout_constraintBottom_toTopOf="@+id/start_btn"
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <TextView
         android:id="@+id/txt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
-        android:text="Count = 0"
-        app:layout_constraintBottom_toTopOf="@+id/button3"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/plus1"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="+1"
+        android:text="0"
+        android:textSize="100dp"
+        app:layout_constraintBottom_toTopOf="@+id/viewBpm"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/plus2"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="+2"
-        app:layout_constraintStart_toEndOf="@+id/plus1"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/plus3"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="+3"
-        app:layout_constraintStart_toEndOf="@+id/plus2"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/plus4"
-        android:layout_width="45dp"
-        android:layout_height="45dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="+4"
-        app:layout_constraintStart_toEndOf="@+id/plus3"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/rgAddTempo" />
 
     <RadioGroup
-        android:layout_width="match_parent"
+        android:id="@+id/radioGroup"
+        android:layout_width="140dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@+id/plus3">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <RadioButton
+            android:id="@+id/bar1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:text="Add every 1 bar" />
 
         <RadioButton
+            android:id="@+id/bar2"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:text="Add every 2 bars" />
 
         <RadioButton
+            android:id="@+id/bar3"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:text="Add every 3 bars" />
 
         <RadioButton
+            android:id="@+id/bar4"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Add every 4 bars" />
+
+        <RadioButton
+            android:id="@+id/none"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="No" />
+    </RadioGroup>
+
+    <RadioGroup
+        android:id="@+id/rgAddTempo"
+        android:layout_width="50dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toEndOf="@+id/radioGroup"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <RadioButton
+            android:id="@+id/radPlus1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Add every 4 bars" />
+            android:text="+1"
+            tools:layout_editor_absoluteX="26dp"
+            tools:layout_editor_absoluteY="239dp" />
+
+        <RadioButton
+            android:id="@+id/radPlus2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="+2"
+            tools:layout_editor_absoluteX="26dp"
+            tools:layout_editor_absoluteY="239dp" />
+
+        <RadioButton
+            android:id="@+id/radPlus3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="+3"
+            tools:layout_editor_absoluteX="26dp"
+            tools:layout_editor_absoluteY="239dp" />
+
+        <RadioButton
+            android:id="@+id/radPlus4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="+4"
+            tools:layout_editor_absoluteX="26dp"
+            tools:layout_editor_absoluteY="239dp" />
+
+        <RadioButton
+            android:id="@+id/radPlus5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="+5"
+            tools:layout_editor_absoluteX="26dp"
+            tools:layout_editor_absoluteY="239dp" />
     </RadioGroup>
+
+    <Button
+        android:id="@+id/resetBtn"
+        android:layout_width="168dp"
+        android:layout_height="160dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:onClick="onReset"
+        android:text="RESET"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/rgAddTempo"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
